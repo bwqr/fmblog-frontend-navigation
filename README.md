@@ -5,7 +5,7 @@ This module creates a wrapper around the app, which contains sidebar and topbar.
 *--no required packages--*
 
 **Required Modules**
-1. fmblog-frontend-material
+1. fmblog-frontend-shared
 2. Angular-Module-Core
 
 **Functionalities**
