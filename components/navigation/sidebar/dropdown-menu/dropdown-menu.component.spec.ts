@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DropdownMenuComponent } from './dropdown-menu.component';
+import { CoreModule, SharedModule } from '../../../../imports';
 
 describe('DropdownMenuComponent', () => {
   let component: DropdownMenuComponent;
@@ -8,9 +9,13 @@ describe('DropdownMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DropdownMenuComponent ]
+      declarations: [DropdownMenuComponent],
+      imports: [
+        CoreModule,
+        SharedModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

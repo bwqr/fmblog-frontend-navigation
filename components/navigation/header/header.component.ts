@@ -4,7 +4,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: []
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
