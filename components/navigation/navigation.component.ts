@@ -1,40 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { MainRequestService, CacheService, HelpersService } from '../../imports';
+import {MainRequestService, CacheService, HelperService} from '../../imports';
+import {ActivatedRoute} from '@angular/router';
+import {switchMap} from 'rxjs/operators';
+import {MainComponent} from '../../imports';
 
 @Component({
-    selector: 'app-navigation',
-    templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.sass']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.sass']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent extends MainComponent implements OnInit {
 
-    user: any;
+  user: any;
 
-    menus: any = [];
-
-    mode = 'side';
-
-    get isPageReady() {
-        return this.menus && this.user;
+  menus: any = [
+    {
+      url: '/conference/video-room',
+      name: 'Video Room',
+      children: []
+    },
+    {
+      url: '/conference/audio-bridge',
+      name: 'Audio Bridge',
+      children: []
+    },
+    {
+      url: '/user/profile',
+      name: 'User Profile',
+      children: []
     }
+  ];
 
-    constructor(
-        private mainRequestService: MainRequestService,
-        private cacheService: CacheService,
-        private helpersService: HelpersService
-    ) { }
+  mode = 'side';
 
-    ngOnInit() {
+  get isPageReady() {
+    return this.menus && this.user;
+  }
 
-        this.cacheService.get('menus', this.mainRequestService.makeGetRequest('user.menus', this.helpersService.getLocale()))
-            .subscribe(response => this.menus = response);
+  constructor(
+    private requestService: MainRequestService,
+    private cacheService: CacheService,
+    private helpersService: HelperService,
+    private route: ActivatedRoute
+  ) {
+    super();
+  }
 
-        this.cacheService.get('user', this.mainRequestService.makeGetRequest('user.info'))
-            .subscribe(response => this.user = response);
-    }
+  ngOnInit() {
+    this.subs.add(
+      this.route.data.subscribe((data: { user: any }) => {
+        this.user = data.user;
+      })
+    );
+  }
 
-    setMode(mode: string) {
-        this.mode = mode;
-    }
+  setMode(mode: string) {
+    this.mode = mode;
+  }
 }
