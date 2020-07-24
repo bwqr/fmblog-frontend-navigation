@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
-import {MainRequestService, CacheService, HelperService} from '../../imports';
+import {CacheService, HelperService, MainComponent, MainRequestService} from '../../imports';
 import {ActivatedRoute} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
-import {MainComponent} from '../../imports';
 
 @Component({
   selector: 'app-navigation',
@@ -15,21 +13,6 @@ export class NavigationComponent extends MainComponent implements OnInit {
   user: any;
 
   menus: any = [
-    {
-      url: '/conference/video-room',
-      name: 'Video Room',
-      children: []
-    },
-    {
-      url: '/conference/audio-bridge',
-      name: 'Audio Bridge',
-      children: []
-    },
-    {
-      url: '/user/profile',
-      name: 'User Profile',
-      children: []
-    }
   ];
 
   mode = 'side';
@@ -49,8 +32,9 @@ export class NavigationComponent extends MainComponent implements OnInit {
 
   ngOnInit() {
     this.subs.add(
-      this.route.data.subscribe((data: { user: any }) => {
+      this.route.data.subscribe((data: { user: any, menus: any }) => {
         this.user = data.user;
+        this.menus = data.menus;
       })
     );
   }
